@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Multi level menu</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js?ver=1.8.1"></script>
+	<style type="text/css">
+		body {
+			background: pink;
+			color: red;
+		}
+
+		nav {
+			box-sizing: border-box;
+			clear: both;
+			color: rgb(117, 117, 117);
+			display: block;
+			float: none;
+			font-family: raleway, sans-serif;
+			font-feature-settings: 'tnum' 1;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: normal;
+			height: 70px;
+			line-height: 22.4px;
+			padding-right: 48px;
+			position: relative;
+			text-align: left;
+			text-size-adjust: 100%;
+			width: 100%;
+			-webkit-font-smoothing: antialiased;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			background: white;
+		}
+
+		.sub-menu {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 100%;
+			width: 100%;
+		}
+
+		ul {
+			display: block;
+			position: relative;
+			list-style-type: none;
+			margin: 0;
+			padding: 0;			
+			transition: all .2s ease-in-out;
+		}
+
+		li {
+			display: block;
+			border-bottom: 1px solid black
+		}
+
+		a {
+			display: block;
+			padding: 1em 0;
+		}
+
+		.menu-item-has-children > a::after {
+			content: '>>';
+			float: right;
+		}
+
+		.navigation {
+			transform: translate(0, -300%);		
+			transition: all .2s ease-in-out;
+		}
+
+		.open {
+			transform: translate(0,0);
+		}
+
+		.one-left {
+			transform: translate(-100%, 0);
+		}
+
+		.two-left {
+			display: block;
+		}
+
+	</style>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+		  	$('.toggle-button').click(function () {
+    			$('.navigation').toggleClass('open');
+    			$('#primary, #colophon').toggle();
+
+	    		$('.open .menu-item-has-children > a').click(function(event) {
+	      			event.preventDefault();
+
+	      			var categoryName = $(this).text();
+	      			var categoryLink = $(this).attr('href');
+	      			var link = '<li><a href="' + categoryLink + '">' + categoryName + '</a></li>';
+	      			var backLink = '<li><a class="back-link" href=""><< Wstecz</a></li>';
+
+	      			$(this).parents('ul').addClass('one-left');
+
+	      			var list = $(this).next();
+	      			$(list).addClass('two-left');
+
+	      			if (!list.hasClass('linked')) {
+	      				$("li:first", list).before(link);
+	      				$("li:first", list).before(backLink);
+	      				$(list).addClass('linked');
+	      			}	      			
+
+	      			$(".back-link").click(function (event) {
+	      				event.preventDefault();
+	      				// $(this).parents('ul.two-left.one-left').removeClass('one-left');
+	      				// $(this).parents('ul').removeClass('two-left');
+	      				var test = $(this).parents('ul.two-left.one-left');
+	      				var test2 = $(this).parent();
+	      				if ($(test).length > 0) {
+	      					console.log(test);
+	      					$(test).removeClass('one-left');
+	      					$(test2).removeClass('two-left');
+	      					// $(this).parents('ul.two-left.one-left').removeClass('one-left');
+	      					// $(this).parents('ul').removeClass('two-left');
+	      					// alert('test');
+	      				} else {
+	      					$(this).parents('ul').removeClass('one-left');
+	      					$(this).parents('ul').removeClass('two-left');
+	      				}
+
+	      				var link = $(this).parents('ul.two-left.one-left');
+	      				
+	      			});
+
+	      			
+
+	      			// create back element
+
+
+	    		});
+
+  			});
+  		});
+	</script>
+</head>
+<body>
+	<nav id="site-navigation" class="main-navigation" role="navigation">
+		<button class="toggle-button">
+			<span class="text">Menu</span>
+			<div class="hamburger">
+				<span></span>
+				<span></span>
+				<span></span>	
+			</div>				
+		</button>
+		<div class="navigation">
+			<div class="menu-main-menu-container">
+				<ul id="primary-menu" class="menu nav-menu" aria-expanded="false">
+					<li id="menu-item-229" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-229" aria-haspopup="true">
+						<a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/">Oferta</a>
+						<ul class="sub-menu">
+							<li id="menu-item-237" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-237" aria-haspopup="true"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pompy-ciepla/">Pompy ciepła</a>
+								<ul class="sub-menu">
+									<li id="menu-item-238" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-238"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pompy-ciepla/bezposrednie-parowanie-woda/">Bezpośrednie parowanie / woda</a></li>
+									<li id="menu-item-239" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-239"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pompy-ciepla/powietrze-woda/">Powietrze / woda</a></li>
+									<li id="menu-item-240" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-240"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pompy-ciepla/przygotowanie-cieplej-wody-uzytkowej/">Przygotowanie ciepłej wody użytkowej</a></li>
+									<li id="menu-item-241" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-241"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pompy-ciepla/solanka-woda/">Solanka / woda</a></li>
+									<li id="menu-item-242" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-242"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pompy-ciepla/woda-woda/">Woda / woda</a></li>
+								</ul>
+							</li>
+							<li id="menu-item-230" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-230"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/budownictwo-jedno-i-wielorodzinne/">Budownictwo jedno i&nbsp;wielorodzinne</a></li>
+							<li id="menu-item-231" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-231"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/dolne-zrodlo/">Dolne źródło</a></li>
+							<li id="menu-item-232" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-232"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/fotowoltaika/">Fotowoltaika</a></li>
+							<li id="menu-item-233" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-233"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/klimatyzacja/">Klimatyzacja</a></li>
+							<li id="menu-item-234" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-234"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/kolektory-sloneczne/">Kolektory słoneczne</a></li>
+							<li id="menu-item-235" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-235"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/kotlownie-gazowe-i-olejowe/">Kotłownie gazowe i&nbsp;olejowe</a></li>
+							<li id="menu-item-236" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-236"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/ogrzewanie/">Ogrzewanie</a></li>
+							<li id="menu-item-243" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-243"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pompy-ciepla/zbiorniki-buforowe/">Zbiorniki buforowe</a></li>
+							<li id="menu-item-244" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-244"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/pracownia-projektowa/">Pracownia projektowa</a></li>
+							<li id="menu-item-245" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-245"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/przemyslowe-pompy-ciepla/">Przemysłowe pompy ciepła</a></li>
+							<li id="menu-item-246" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-246"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/serwis/">Serwis</a></li>
+							<li id="menu-item-247" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-247"><a href="http://jakubk.2ap.pl/work/pompyciepla/oferta/wentylacja/">Wentylacja</a></li>
+						</ul>
+					</li>
+					<li id="menu-item-322" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-322" aria-haspopup="true"><a href="http://jakubk.2ap.pl/work/pompyciepla/realizacje/">Realizacje</a>
+					<ul class="sub-menu">
+						<li id="menu-item-323" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-323"><a href="http://jakubk.2ap.pl/work/pompyciepla/realizacje/pompy-ciepla/">Pompy ciepła</a></li>
+						<li id="menu-item-419" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-419"><a href="http://jakubk.2ap.pl/work/pompyciepla/realizacje/kotlownie-przemyslowe/">Kotłownie przemysłowe</a></li>
+						<li id="menu-item-420" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420"><a href="http://jakubk.2ap.pl/work/pompyciepla/realizacje/wentylacja/">Wentylacja</a></li>
+					</ul>
+					</li>
+					<li id="menu-item-220" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-220" aria-haspopup="true"><a href="http://jakubk.2ap.pl/work/pompyciepla/firma/">Firma</a>
+					<ul class="sub-menu">
+						<li id="menu-item-221" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-221"><a href="http://jakubk.2ap.pl/work/pompyciepla/firma/ehpa-q/">EHPA-Q</a></li>
+						<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="http://jakubk.2ap.pl/work/pompyciepla/firma/o-nas/">O&nbsp;nas</a></li>
+						<li id="menu-item-223" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-223"><a href="http://jakubk.2ap.pl/work/pompyciepla/firma/oschner/">OSCHNER</a></li>
+						<li id="menu-item-224" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-224"><a href="http://jakubk.2ap.pl/work/pompyciepla/firma/uprawnienia-udt/">Uprawnienia UDT</a></li>
+					</ul>
+					</li>
+					<li id="menu-item-225" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-225" aria-haspopup="true"><a href="http://jakubk.2ap.pl/work/pompyciepla/informacje/">Informacje</a>
+					<ul class="sub-menu">
+						<li id="menu-item-226" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-226"><a href="http://jakubk.2ap.pl/work/pompyciepla/informacje/czym-sa-pompy-ciepla/">Czym są pompy ciepła</a></li>
+						<li id="menu-item-227" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-227"><a href="http://jakubk.2ap.pl/work/pompyciepla/informacje/finansowanie-oze/">Finansowanie OZE</a></li>
+					</ul>
+					</li>
+					<li id="menu-item-228" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-228"><a href="http://jakubk.2ap.pl/work/pompyciepla/kontakt/">Kontakt</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</body>
+</html>
