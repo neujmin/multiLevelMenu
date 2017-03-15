@@ -82,95 +82,146 @@
 
 	</style>
 	<script type="text/javascript">
+		// 4. jedna funkcja przesuwa całość w lewo drugo tylk pokazuje i chowa submenu
+
+		// Stany:
+		// 1) Świerzy - moze isc tylko głębiej // nie ma parent sub-menu
+		// 2) W środku - może się cofnąc do nadrzędnego, albo iść głębiej
+		// 3) Końcowy - może tylko się cofnąć // nie ma next sub-menu
+
+		// Akcje:
+		// 1) Głębiej - obecne menu idzie w lewo, a nowe się pojawia
+		// 2) Cofanie - obecne menu znika, a nadrzędne przesuwa się w prawo
+
+		// new menu (structure, position)
+		// position change -> left right 
+
+		// if is second level lewo rowna sie third level
+
+		// function checkLevel() zwraca poziom 
+
+		// ze zwroconym poziomem udajemy sie do linkow
+
+		// back na pierwszym nie dziala
+		// na drugim zdjemuje klase drugi i wstawia pierwszy itd
+
+		// na przod na pierwszym usuwa klase pierwszy i wstawia drugi itd.
+
+
+
+
+
 		jQuery(document).ready(function ($) {
+			// variables
+			var bpMedium = 900
+
 		  	$('.toggle-button').click(function () {
     			$('.navigation').toggleClass('open');
-    			// na koniec wszystko do javascriptu
+    			
+				$('.open .menu-item-has-children > a').click(function(event) {
+					if ($(window).width() < bpMedium) {
+						event.preventDefault();
 
-    			// wypisz drzewo menu
+						if ($('.navigation').attr('class') === 'second-level') {
+							// move to third level
+						} else {
+							// dodaj klase drugi level
+						}
 
-    			var menuList = $('.navigation').html();
-    			// console.log(menuList);
+						// alert();
+						// if ($(this).parents('.sub-menu').length === 0) {
+						// 	alert('Pierwszy');
+						// } else {
+						// 	alert('W środku');
+						// }
 
-    			// one function slides whoe thing left
-    			// other just adds or hides
+						// if ($('.navigation').attr('class') === 'three-left') {
+						// 	// move three
+						// 	$('.navigation').addClass('one-left');
+						// } else if ($('.navigation').attr('class') === 'two-left') {
+						// 	// move two
+						// 	$('.navigation').addClass('three-left');
+						// } else if ($('.navigation').attr('class') === 'one-left') {
+						// 	// move one
+						// 	$('.navigation').addClass('two-left');
+						// } else {
+						// 	$('.navigation').addClass('one-left');
+						// }
+					}
+				});
 
+    		});
 
+    		$( ".toggle-button" ).on( "click", function( event ) {
+			    $('.sub-menu').each(function () {
+			    	var place = $(this).prev();
+	      			var catLink = '<li><a href="' + $(place).attr('href') + '">' + $(place).text() + '</a></li>';
+			    	var backLink = '<li><a class="back-link" href=""><< Wstecz</a></li>';
+      				$("li:first", this).before(backLink, catLink);
+	    		});
+			 	$( this ).off( event ); 
+			});		
 
-    			var lis = document.getElementById("site-navigation").getElementsByTagName("ul");
-    			console.log(lis);
+    	});
 
-    			// move main list left and show sub-menu
-    			$('.open .menu-item-has-children > a').click(function(event) {
-	    			event.preventDefault();
+  //   			// move main list left and show sub-menu
+  //   			$('.open .menu-item-has-children > a').click(function(event) {
+	 //    			event.preventDefault();
 	    			
-	    			var left = $('.navigation').css('transform');
-	    			console.log(left);
-	    			$('.navigation').css({'transform':'translate(-100%,0)'});
-	    			$(this).next().addClass('two-left');
+	 //    			var left = $('.navigation').css('transform');
+	 //    			console.log(left);
+	 //    			$('.navigation').css({'transform':'translate(-100%,0)'});
+	 //    			$(this).next().addClass('two-left');
+	 //  			});
 
 
 
+	 //    		// $('.open .menu-item-has-children > a').click(function(event) {
+	 //      // 			event.preventDefault();
 
-	    			//":"translate(100px,100px)"
+	 //      // 			var categoryName = $(this).text();
+	 //      // 			var categoryLink = $(this).attr('href');
+	 //      // 			var link = '<li><a href="' + categoryLink + '">' + categoryName + '</a></li>';
+	 //      // 			var backLink = '<li><a class="back-link" href=""><< Wstecz</a></li>';
 
-	    // 			var classList = document.getElementById('ul').className.split(/\s+/);
-					// for (var i = 0; i < classList.length; i++) {
-					//     if (classList[i] === 'someClass') {
-					//     	console.log()
-					//     }
-					// }
+	 //      // 			$(this).parents('ul').addClass('one-left');
 
-	  			});
+	 //      // 			var list = $(this).next();
+	 //      // 			$(list).addClass('two-left');
 
+	 //      // 			if (!list.hasClass('linked')) {
+	 //      // 				$("li:first", list).before(link);
+	 //      // 				$("li:first", list).before(backLink);
+	 //      // 				$(list).addClass('linked');
+	 //      // 			}	      			
 
+	 //      // 			$(".back-link").click(function (event) {
+	 //      // 				event.preventDefault();
+	 //      // 				// $(this).parents('ul.two-left.one-left').removeClass('one-left');
+	 //      // 				// $(this).parents('ul').removeClass('two-left');
+	 //      // 				var test = $(this).parents('ul.two-left.one-left');
+	 //      // 				var test2 = $(this).parent();
+	 //      // 				if ($(test).length > 0) {
+	 //      // 					console.log(test);
+	 //      // 					$(test).removeClass('one-left');
+	 //      // 					$(test2).removeClass('two-left');
+	 //      // 					// $(this).parents('ul.two-left.one-left').removeClass('one-left');
+	 //      // 					// $(this).parents('ul').removeClass('two-left');
+	 //      // 					// alert('test');
+	 //      // 				} else {
+	 //      // 					$(this).parents('ul').removeClass('one-left');
+	 //      // 					$(this).parents('ul').removeClass('two-left');
+	 //      // 				}
 
-	    		// $('.open .menu-item-has-children > a').click(function(event) {
-	      // 			event.preventDefault();
-
-	      // 			var categoryName = $(this).text();
-	      // 			var categoryLink = $(this).attr('href');
-	      // 			var link = '<li><a href="' + categoryLink + '">' + categoryName + '</a></li>';
-	      // 			var backLink = '<li><a class="back-link" href=""><< Wstecz</a></li>';
-
-	      // 			$(this).parents('ul').addClass('one-left');
-
-	      // 			var list = $(this).next();
-	      // 			$(list).addClass('two-left');
-
-	      // 			if (!list.hasClass('linked')) {
-	      // 				$("li:first", list).before(link);
-	      // 				$("li:first", list).before(backLink);
-	      // 				$(list).addClass('linked');
-	      // 			}	      			
-
-	      // 			$(".back-link").click(function (event) {
-	      // 				event.preventDefault();
-	      // 				// $(this).parents('ul.two-left.one-left').removeClass('one-left');
-	      // 				// $(this).parents('ul').removeClass('two-left');
-	      // 				var test = $(this).parents('ul.two-left.one-left');
-	      // 				var test2 = $(this).parent();
-	      // 				if ($(test).length > 0) {
-	      // 					console.log(test);
-	      // 					$(test).removeClass('one-left');
-	      // 					$(test2).removeClass('two-left');
-	      // 					// $(this).parents('ul.two-left.one-left').removeClass('one-left');
-	      // 					// $(this).parents('ul').removeClass('two-left');
-	      // 					// alert('test');
-	      // 				} else {
-	      // 					$(this).parents('ul').removeClass('one-left');
-	      // 					$(this).parents('ul').removeClass('two-left');
-	      // 				}
-
-	      // 				var link = $(this).parents('ul.two-left.one-left');
+	 //      // 				var link = $(this).parents('ul.two-left.one-left');
 	      				
-	      // 			});  // .back-link
+	 //      // 			});  // .back-link
 
-	    		// }); // .open .menu-item-hsa-children > a
+	 //    		// }); // .open .menu-item-hsa-children > a
 
-  			}); // .toggle button		  	
+  // 			}); // .toggle button		  	
 
-  		}); // doc redy
+  // 		}); // doc redy
 	</script>
 </head>
 <body>
